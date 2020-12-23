@@ -7,7 +7,7 @@ import userRouter from "./routers/userRouter";
 import videoRouter from "./routers/videoRouter";
 import globalRouter from "./routers/globalRouter";
 import routes from "./routes";
-import { localsMiddleware } from "./middleware";
+import { CSPMiddleware, localsMiddleware } from "./middleware";
 const app = express();
 
 app.use(helmet());
@@ -18,6 +18,7 @@ app.use(cookeyParser());
 app.use(morgan("dev"));
 
 app.use(localsMiddleware);
+app.use(CSPMiddleware);
 
 app.use(routes.home, globalRouter);
 app.use(routes.users, userRouter);
