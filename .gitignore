@@ -103,5 +103,9 @@ dist
 # TernJS port file
 .tern-port
 
+# location for uploading video
+videos
+
+
 yarn.lock
 package-lock.json
