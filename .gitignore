@@ -104,7 +104,7 @@ dist
 .tern-port
 
 # location for uploading video
-videos
+uploads
 
 
 yarn.lock
