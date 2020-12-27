@@ -27,9 +27,9 @@ const routes = {
   logout: LOGOUT,
   search: SEARCH,
   users: USERS,
-  userDetail: (id)=>{
-    if(id){
-      return `/users/${id}`
+  userDetail: (id) => {
+    if (id) {
+      return `/users/${id}`;
     }
     return USER_DETAIL;
   },
@@ -37,18 +37,24 @@ const routes = {
   changePassword: CHANGE_PASSWORD,
   videos: VIDEOS,
   upload: UPLOAD,
-  videoDetail: (id)=>{
-    if(id){
-      return `${VIDEOS}/${id}`
+  videoDetail: (id) => {
+    if (id) {
+      return `${VIDEOS}/${id}`;
     }
     return VIDEO_DETAIL;
   },
-  editVideo: EDIT_VIDEO,
-  deleteVideo: DELETE_VIDEO
+  editVideo: (id) => {
+    if (id) {
+      return `${VIDEOS}/${id}/edit`;
+    }
+    return EDIT_VIDEO;
+  },
+  deleteVideo: (id) => {
+    if (id) {
+      return `${VIDEOS}/${id}/delete`;
+    }
+    return DELETE_VIDEO;
+  },
 };
 
 export default routes;
-
-
-
-
