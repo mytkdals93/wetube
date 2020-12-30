@@ -20,6 +20,10 @@ const VIDEO_DETAIL = "/:id";
 const EDIT_VIDEO = "/:id/edit";
 const DELETE_VIDEO = "/:id/delete";
 
+// Github
+const GITHUB = "/auth/github";
+const GITHUB_CALLBACK = "/auth/github/callback";
+
 const routes = {
   home: HOME,
   join: JOIN,
@@ -55,6 +59,8 @@ const routes = {
     }
     return DELETE_VIDEO;
   },
+  github: GITHUB,
+  githubCallback: GITHUB_CALLBACK,
 };
 
 export default routes;
