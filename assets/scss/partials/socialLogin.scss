@@ -16,6 +16,9 @@
       margin-right: 10px;
       font-size: 20px;
     }
+    a:visited {
+      color: inherit;
+    }
   }
   .social-login--github {
     background-color: $black;

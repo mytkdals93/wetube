@@ -49,9 +49,12 @@ export const githubLoginCallback = async (_, __, profile, cb) => {
   try {
     email = email || `${username}@github.com`;
     name = name || username;
-    const user = await User.findOne({ email });
+    let user =
+      (await User.findOne({ githubId: id })) || (await User.findOne({ email }));
     if (user) {
-      user.githubId = id;
+      user.githubId = user.githubId || id;
+      user.email = email;
+      user.name = name;
       user.save();
       return cb(null, user);
     }
@@ -74,9 +77,20 @@ export const logout = (req, res) => {
   req.logout();
   res.redirect(routes.home);
 };
-
-export const userDetail = (req, res) =>
-  res.render("userDetail", { pageTitle: "User Detail" });
+export const getMe = (req, res) => {
+  res.render("userDetail", { pageTitle: "User Detail", user: req.user });
+};
+export const userDetail = async (req, res) => {
+  const {
+    params: { id },
+  } = req;
+  try {
+    const user = await User.findById(id);
+    res.render("userDetail", { pageTitle: "User Detail", user });
+  } catch (error) {
+    res.redirect(routes.home);
+  }
+};
 export const editProfile = (req, res) =>
   res.render("editProfile", { pageTitle: "Edit Profile" });
 export const changePassword = (req, res) =>
