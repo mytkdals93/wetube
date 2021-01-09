@@ -7,11 +7,21 @@ const currentTime = document.getElementById("currentTime");
 const totalTime = document.getElementById("totalTime");
 const volumeRange = document.getElementById("jsVolume");
 const progressBar = document.getElementById("jsProgress");
+const viewNumber = document.getElementById("jsViewNumber");
+
 const registerView = () => {
   const videoId = window.location.href.split("/videos/")[1];
   fetch(`/api/${videoId}/view`, {
     method: "POST",
-  });
+  })
+    .then((res) => {
+      return res.json(); //Promise 반환
+    })
+    .then((json) => {
+      viewNumber.innerHTML = `${json.view} ${
+        json.view === 1 ? "view" : "views"
+      }`;
+    });
 };
 
 function handlePlayClick() {

@@ -105,6 +105,7 @@ export const deleteVideo = async (req, res) => {
   res.redirect(routes.home);
 };
 
+// Register View
 export const postRegisterView = async (req, res) => {
   const {
     params: { id },
@@ -113,10 +114,10 @@ export const postRegisterView = async (req, res) => {
     const video = await Video.findById(id);
     video.views += 1;
     video.save();
-    res.status(200);
+    res.status(201);
+    res.json({ view: video.views });
   } catch (error) {
     res.status(400);
-    res.end();
   } finally {
     res.end();
   }
@@ -136,6 +137,35 @@ export const postAddComment = async (req, res) => {
       creator: user.id,
     });
     video.comments.push(newComment.id);
+    video.save();
+    res.json(newComment);
+  } catch (error) {
+    console.log(error);
+    res.status(400);
+  } finally {
+    res.end();
+  }
+};
+
+//delete Comment
+export const postDeleteComment = async (req, res) => {
+  const {
+    params: { id },
+    body: { commentId },
+    user,
+  } = req;
+  try {
+    const comment = Comment.findById(commentId);
+    if (user && user.id === comment.creator) {
+      throw new Error("유저가 맞지않음");
+    }
+    await Comment.findByIdAndDelete({ _id: commentId });
+    const video = await Video.findById(id);
+    const target = await video.comments.findIndex(
+      (element) => element.id === commentId
+    );
+
+    video.comments.splice(parseInt(target, 10), 1);
     video.save();
   } catch (error) {
     console.log(error);

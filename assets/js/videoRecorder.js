@@ -30,10 +30,9 @@ const startRecording = () => {
 
 const getVideo = async () => {
   try {
-    const stream = await navigator.mediaDevices.getUserMedia({
-      audio: true,
-      video: { width: 1280, height: 720 },
-    });
+    const constraints = { audio: true, video: { width: 1280, height: 720 } };
+    const stream = await navigator.mediaDevices.getUserMedia(constraints);
+
     videoPreview.srcObject = stream;
     videoPreview.muted = true;
     videoPreview.play();
@@ -41,6 +40,7 @@ const getVideo = async () => {
     streamObject = stream;
     startRecording();
   } catch (error) {
+    console.log(error);
     recordBtn.innerHTML = "☹️ Cant record";
   } finally {
     recordBtn.removeEventListener("click", getVideo);

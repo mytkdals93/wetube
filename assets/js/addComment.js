@@ -1,4 +1,5 @@
 import axios from "axios";
+import { handleSubmit as handleDelete } from "./deleteComment";
 
 const addCommentForm = document.getElementById("jsAddComment");
 const commentList = document.getElementById("jsCommentList");
@@ -10,8 +11,14 @@ const increaseNumber = () => {
 const addComment = (comment) => {
   const li = document.createElement("li");
   const span = document.createElement("span");
-  span.innerHTML = comment;
+  const i = document.createElement("i");
+  i.className = "fas fa-backspace";
+  span.innerHTML = comment.text;
+  // eslint-disable-next-line no-underscore-dangle
+  li.dataset.indexNumber = comment._id;
   li.appendChild(span);
+  li.appendChild(i);
+  i.addEventListener("click", handleDelete);
   commentList.prepend(li);
   increaseNumber();
 };
@@ -26,7 +33,7 @@ const sendComment = async (comment) => {
     },
   });
   if (response.status === 200) {
-    addComment(comment);
+    addComment(response.data);
   }
 };
 

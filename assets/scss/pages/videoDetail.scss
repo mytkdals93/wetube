@@ -60,6 +60,10 @@
         &:not(:last-child) {
           margin-bottom: 15px;
         }
+        i {
+          margin-left: 15px;
+          cursor: pointer;
+        }
       }
     }
   }

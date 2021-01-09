@@ -13,9 +13,11 @@ block content
             h5.video__title=video.title
             p.video__description=video.description
             if video.views === 1
-                span.video__views 1 view
+                span.video__views#jsViewNumber 1 view
+
             else 
-                span.video__views #{video.views} views
+                span.video__views#jsViewNumber #{video.views} views
+
             .video__author
                 |Uploaded by 
                 a(href=routes.userDetail(video.creator.id))=video.creator.name
@@ -32,5 +34,7 @@ block content
                 input(type="text", placeholder="Add a comment")
             ul.video__comments-list#jsCommentList
                 each comment in video.comments.reverse()
-                    li
-                        span=comment.text 
+                    li(data-index-number=comment.id)
+                        span=comment.text
+                        if loggedUser && String(comment.creator) === loggedUser.id
+                            i.fas.fa-backspace
